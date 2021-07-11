@@ -16,9 +16,9 @@ Date::Date(std::string date) {
 	std::getline(sstring, strDay, '/');
 	std::getline(sstring, strYear);
 
-	this->month = (short) stoi(strMonth);
-	this->day = (short) stoi(strDay);
-	this->year = (short) stoi(strYear);
+	this->month = (short) std::stoi(strMonth);
+	this->day = (short) std::stoi(strDay);
+	this->year = (short) std::stoi(strYear);
 }
 short Date::GetMonth() {
 	return month;

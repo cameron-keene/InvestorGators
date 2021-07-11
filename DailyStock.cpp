@@ -3,8 +3,9 @@
 
 using namespace std;
 
-DailyStock::DailyStock(string n, std::string d, float c, int v, float o, float h, float l) {
+DailyStock::DailyStock(string n, string s, string d, float c, int v, float o, float h, float l) {
 	this->name = n;
+	this->symbol = s;
 	this->date  = Date(d);
 	this->close = c;
 	this->volume = v;
@@ -18,7 +19,9 @@ DailyStock::DailyStock(string n, std::string d, float c, int v, float o, float h
 string DailyStock::GetName() {
 	return this->name;
 }
-
+string DailyStock::GetSymbol() {
+	return this->symbol;
+}
 Date DailyStock::GetDate() {
 	return this->date;
 }

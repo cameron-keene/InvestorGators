@@ -7,11 +7,11 @@ class Date
 	short year;
 
 public:
-	Date() {};
-	Date(std::string date) {};
-	short GetMonth() {};
-	short GetDay() {};
-	short GetYear() {};
+	Date();
+	Date(std::string date);
+	short GetMonth();
+	short GetDay();
+	short GetYear();
 
 };
 
