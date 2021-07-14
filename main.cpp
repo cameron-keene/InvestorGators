@@ -76,6 +76,46 @@ DailyStock readStockData(string lineFile, string symbol, string name) {
     return DailyStock(name, symbol, date, close, volume, open, high, low);
 }
 
+
+vector<DailyStock> Search(Date d1, Date d2, vector<DailyStock> fullArr) {
+    vector <DailyStock> retVec;
+    for (int i = 0; i < fullArr.size(); i++) {
+        if (d1.GetYear() <= fullArr[i].GetDate().GetYear() && d2.GetYear() >= fullArr[i].GetDate().GetYear()) {
+            if (d1.GetYear() == fullArr[i].GetDate().GetYear() || d2.GetYear() == fullArr[i].GetDate().GetYear()) {
+                if (d1.GetYear() == fullArr[i].GetDate().GetYear()) {
+                    if (d1.GetMonth() < fullArr[i].GetDate().GetMonth()) {
+                        retVec.push_back(fullArr[i]);
+                    }
+                    else {
+                        if (d1.GetMonth() == fullArr[i].GetDate().GetMonth()) {
+                            if (d1.GetDay() <= fullArr[i].GetDate().GetDay()) {
+                                retVec.push_back(fullArr[i]);
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (d2.GetMonth() > fullArr[i].GetDate().GetMonth()) {
+                        retVec.push_back(fullArr[i]);
+                    }
+                    else {
+                        if (d2.GetMonth() == fullArr[i].GetDate().GetMonth()) {
+                            if (d2.GetDay() >= fullArr[i].GetDate().GetDay()) {
+                                retVec.push_back(fullArr[i]);
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                retVec.push_back(fullArr[i]);
+            }
+        }
+    }
+    return retVec;
+}
+
+
 int main(){
     
     // Storage of daily stocks from s&p 100 for 5 years
@@ -105,6 +145,24 @@ int main(){
             }
         }
     }
+
+
+    Date d1h = Date("10/24/2018");
+    Date d2h = Date("12/12/2018");
+
+    cout << d1h.GetMonth();
+    cout << d2h.GetDay();
+
+    vector<DailyStock> subVec = Search(d1h, d2h, dailyStocks);
+
+    cout << subVec.size();
+
+    cout << endl;
+
+    for (int i = 0; i < subVec.size(); i++) {
+        cout << subVec[i].GetName();
+    }
+
 
     cout << "Total daily stocks: " << dailyStocks.size() << endl;
 
