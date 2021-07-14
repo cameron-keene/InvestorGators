@@ -241,7 +241,15 @@ int main(){
         }
     }
 
+<<<<<<< HEAD
      //Fake date inputs, testing search function
+=======
+
+
+
+
+    //Fake date inputs, testing search function
+>>>>>>> main
     Date d1h = Date("12/20/2018");
     Date d2h = Date("12/25/2018");
 
@@ -266,10 +274,13 @@ int main(){
     }
 
 
+<<<<<<< HEAD
 
     // test case of 100 randomly picked stocks
     // stocks arr to hold 100 random DailyStock objects
     DailyStock* stocks[dailyStocks.size()];
+=======
+>>>>>>> main
     cout << "Total daily stocks: " << dailyStocks.size() << endl;
     for(int i = 0; i < dailyStocks.size(); i++){
         //cout << dailyStocks.at(i).GetName() << " " << dailyStocks.at(i).GetClose() << " " << dailyStocks.at(i).GetDailyReturn() << "%" << endl;
