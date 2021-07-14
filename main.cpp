@@ -147,6 +147,8 @@ int main(){
     }
 
 
+
+    //Fake date inputs, testing search function
     Date d1h = Date("10/24/2018");
     Date d2h = Date("12/12/2018");
 
@@ -159,8 +161,9 @@ int main(){
 
     cout << endl;
 
+    //Outputing results of search 
     for (int i = 0; i < subVec.size(); i++) {
-        cout << subVec[i].GetName();
+        cout << subVec[i].GetName() << "'s daily return's: " << subVec[i].GetDailyReturn();
     }
 
 
