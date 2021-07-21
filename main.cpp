@@ -8,6 +8,8 @@
 #include <iostream>
 using namespace std;
 
+// ================ Read CSV =================
+
 // Read csv file containing symbol, officical name, and file name
 void readNames(vector<vector<string> >& stockNames, const string file){
     ifstream names(file);
@@ -78,6 +80,8 @@ DailyStock readStockData(string lineFile, string symbol, string name) {
     return DailyStock(name, symbol, date, close, volume, open, high, low);
 }
 
+// ================ MergeSort =================
+
 // mergeSort --- need to modify to sort based on dailyreturn
 // need to modify it to accept an DailyStock arr of pointers
 // need to return a arr of DailyStock Pointers
@@ -145,6 +149,48 @@ void merge(DailyStock *arr[], int l, int m, int r){
     }
 }
 
+// ================ QuickSort =================
+// Sort stocks based on their daily return using quicksort
+
+// Partition - code referenced from module 6 PPT
+int partition(vector<DailyStock>& stocks, int low, int high) {
+
+    // The first element is the pivot
+    float pivot = stocks[low].GetDailyReturn();
+    int up = low, down = high;
+    while (up < down) {
+        for (int j = up; j < high; j++) {
+            if (stocks[up].GetDailyReturn() > pivot) {
+                break;
+            }
+            up++;
+        }
+        for (int j = high; j > low; j--) {
+            if (stocks[down].GetDailyReturn() < pivot) {
+                break;
+            }
+            down--;
+        }
+        if (up < down) {
+            swap(stocks[up], stocks[down]);
+        }
+    }
+    swap(stocks[low], stocks[down]);
+    return down;
+}
+
+// Quick Sort - code referenced from module 6 PPT
+void quickSort(vector<DailyStock>& stocks, int low, int high) {
+    if (low < high) {
+        float pivot = partition(stocks, low, high);
+        quickSort(stocks, low, pivot - 1);
+        quickSort(stocks, pivot + 1, high);
+    }
+}
+
+// ================ Search =================
+
+// return a vector of stocks given a time period
 vector<DailyStock> Search(Date d1, Date d2, vector<DailyStock> fullArr) {
     vector <DailyStock> retVec;
     for (int i = 0; i < fullArr.size(); i++) {
@@ -241,6 +287,7 @@ int main(){
         }
     }
 
+    cout << "\n-------- search testing-----------\n" << endl;
      //Fake date inputs, testing search function
     Date d1h = Date("12/20/2018");
     Date d2h = Date("12/25/2018");
@@ -265,24 +312,40 @@ int main(){
         cout << subVec[i].GetName() << "'s daily return's: " << subVec[i].GetDailyReturn() << "on: " << subVec[i].GetDate().GetMonth() << "/" << subVec[i].GetDate().GetDay() << "/" << subVec[i].GetDate().GetYear() << endl;
     }
 
-
+    cout << "\n-------- merge sort testing-----------\n" << endl;
 
     // test case of 100 randomly picked stocks
     // stocks arr to hold 100 random DailyStock objects
     DailyStock* stocks[dailyStocks.size()];
     cout << "Total daily stocks: " << dailyStocks.size() << endl;
-    for(int i = 0; i < dailyStocks.size(); i++){
+    for (int i = 0; i < dailyStocks.size(); i++) {
         //cout << dailyStocks.at(i).GetName() << " " << dailyStocks.at(i).GetClose() << " " << dailyStocks.at(i).GetDailyReturn() << "%" << endl;
         stocks[i] = &dailyStocks.at(i);
     }
 
-    mergeSort(stocks, 0, dailyStocks.size()-1);
+    mergeSort(stocks, 0, dailyStocks.size() - 1);
 
-    for(int i = dailyStocks.size()-1; i >= 0; i--){
+    for (int i = dailyStocks.size() - 1; i >= 0; i--) {
         cout.precision(4);
         cout << stocks[i]->GetName() << " " << stocks[i]->GetOpen() << " " << stocks[i]->GetClose() << " " << stocks[i]->GetDailyReturn() << "%" << endl;
         //stocks[i] = &dailyStocks.at((rand() % 115000));
 
     }
+
+    cout << "\n-------- quick sort testing-----------\n" << endl;
+
+    // testing the first 100 stocks
+    vector<DailyStock> temp;
+    for (int i = 0; i < 100; i++) {
+        temp.push_back(dailyStocks.at(i));
+    }
+
+    quickSort(temp, 0, temp.size() - 1);
+
+    for (int i = temp.size() - 1; i >= 0; i--) {
+        cout.precision(4);
+        cout << temp[i].GetName() << " " << temp[i].GetOpen() << " " << temp[i].GetClose() << " " << temp[i].GetDailyReturn() << "%" << endl;
+    }
+
     return 0;
 }
