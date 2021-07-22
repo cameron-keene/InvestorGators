@@ -87,11 +87,11 @@ DailyStock readStockData(string lineFile, string symbol, string name) {
 // need to modify it to accept an DailyStock arr of pointers
 // need to return a arr of DailyStock Pointers
 // sort based on GetDailyReturn()
-void merge(DailyStock *arr[], int l, int m, int r);
+void merge(vector<DailyStock> arr,int l, int m, int r);
 // void PrintArray(DailyStock *arr[], int size);
 
 // code referenced from module 6 PPT
-void mergeSort(DailyStock *arr[], int l, int r){
+void mergeSort(vector<DailyStock> arr, int l, int r){
     
     if(l < r){
         // m is in the point where the array is divided into two sub-arrays
@@ -104,22 +104,23 @@ void mergeSort(DailyStock *arr[], int l, int r){
 }
 
 // code referenced from module 6 PPT
-void merge(DailyStock *arr[], int l, int m, int r){
+void merge(vector<DailyStock>& arr, int l, int m, int r){
     // create x <- arr[1 -> m], y <- arr[m+1 -> r]
     // cout << "array: " << endl;
     // PrintArray(arr, r);
     // cout << endl;
     int n1 = m - l + 1;
     int n2 = r - m;
-    DailyStock* x[n1];
-    DailyStock* y[n2];
+    vector<DailyStock> x;
+    vector<DailyStock> y;
+   
     // DailyStock* x = arr[n1];
     // DailyStock* y = arr[n2];
 
     for (int i = 0; i < n1; i++)
-        x[i] = arr[l+i];
+        x.push_back(arr[l+i]);
     for (int j = 0; j < n2; j++)
-        y[j] = arr[m + 1 + j];
+        y.push_back(arr[m + 1 + j]);
     
     // merge the arrays x and y into arr
     int i, j, k;
@@ -127,7 +128,7 @@ void merge(DailyStock *arr[], int l, int m, int r){
     j = 0; 
     k = l;
     while (i < n1 && j < n2){
-        if (x[i]->GetDailyReturn() <= y[j]->GetDailyReturn()){
+        if (x[i].GetDailyReturn() <= y[j].GetDailyReturn()){
             arr[k] = x[i];
             i++;
         }else{
