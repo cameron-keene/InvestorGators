@@ -6,6 +6,7 @@
 #include "DailyStock.h"
 #include <stdlib.h>
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 // ================ Read CSV =================
@@ -322,30 +323,36 @@ int main(){
         //cout << dailyStocks.at(i).GetName() << " " << dailyStocks.at(i).GetClose() << " " << dailyStocks.at(i).GetDailyReturn() << "%" << endl;
         stocks[i] = &dailyStocks.at(i);
     }
-
+    clock_t t;
+    t = clock();
     mergeSort(stocks, 0, dailyStocks.size() - 1);
+    t = clock() - t;
+    cout << "MergeSort Time: " << ((float)t/CLOCKS_PER_SEC) << "s"<< endl;
 
-    for (int i = dailyStocks.size() - 1; i >= 0; i--) {
-        cout.precision(4);
-        cout << stocks[i]->GetName() << " " << stocks[i]->GetOpen() << " " << stocks[i]->GetClose() << " " << stocks[i]->GetDailyReturn() << "%" << endl;
-        //stocks[i] = &dailyStocks.at((rand() % 115000));
+    // for (int i = dailyStocks.size() - 1; i >= 0; i--) {
+    //     cout.precision(4);
+    //     cout << stocks[i]->GetName() << " " << stocks[i]->GetOpen() << " " << stocks[i]->GetClose() << " " << stocks[i]->GetDailyReturn() << "%" << endl;
+    //     //stocks[i] = &dailyStocks.at((rand() % 115000));
 
-    }
+    // }
 
     cout << "\n-------- quick sort testing-----------\n" << endl;
 
-    // testing the first 100 stocks
+    // testing the first dailyStocks.size() stocks
     vector<DailyStock> temp;
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < dailyStocks.size(); i++) {
         temp.push_back(dailyStocks.at(i));
     }
 
+    t = clock();
     quickSort(temp, 0, temp.size() - 1);
+    t = clock()-t;
+    cout << "QuickSort time: " << ((float)t/CLOCKS_PER_SEC) << "s" << endl;
 
-    for (int i = temp.size() - 1; i >= 0; i--) {
-        cout.precision(4);
-        cout << temp[i].GetName() << " " << temp[i].GetOpen() << " " << temp[i].GetClose() << " " << temp[i].GetDailyReturn() << "%" << endl;
-    }
+    // for (int i = temp.size() - 1; i >= 0; i--) {
+    //     cout.precision(4);
+    //     cout << temp[i].GetName() << " " << temp[i].GetOpen() << " " << temp[i].GetClose() << " " << temp[i].GetDailyReturn() << "%" << endl;
+    // }
 
     return 0;
 }
