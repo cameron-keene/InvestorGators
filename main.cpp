@@ -87,11 +87,11 @@ DailyStock readStockData(string lineFile, string symbol, string name) {
 // need to modify it to accept an DailyStock arr of pointers
 // need to return a arr of DailyStock Pointers
 // sort based on GetDailyReturn()
-void merge(vector<DailyStock> arr,int l, int m, int r);
+void merge(vector<DailyStock>& arr,int l, int m, int r);
 // void PrintArray(DailyStock *arr[], int size);
 
 // code referenced from module 6 PPT
-void mergeSort(vector<DailyStock> arr, int l, int r){
+void mergeSort(vector<DailyStock>& arr, int l, int r){
     
     if(l < r){
         // m is in the point where the array is divided into two sub-arrays
@@ -121,6 +121,7 @@ void merge(vector<DailyStock>& arr, int l, int m, int r){
         x.push_back(arr[l+i]);
     for (int j = 0; j < n2; j++)
         y.push_back(arr[m + 1 + j]);
+    
     
     // merge the arrays x and y into arr
     int i, j, k;
@@ -258,6 +259,13 @@ vector<DailyStock> Search(Date d1, Date d2, vector<DailyStock> fullArr) {
     return retVec;
 }
 
+void printStocksAll(vector<DailyStock> stocks){
+    for (int i = stocks.size() - 1; i >= 0; i--) {
+        cout.precision(4);
+        cout << stocks.at(i).GetName() << " " << stocks.at(i).GetOpen() << " " << stocks.at(i).GetClose() << " " << stocks.at(i).GetDailyReturn() << "%" << endl;
+    }
+}
+
 
 int main(){
     
@@ -289,53 +297,45 @@ int main(){
         }
     }
 
-    cout << "\n-------- search testing-----------\n" << endl;
-     //Fake date inputs, testing search function
-    Date d1h = Date("12/20/2018");
-    Date d2h = Date("12/25/2018");
+    // cout << "\n-------- search testing-----------\n" << endl;
+    //  //Fake date inputs, testing search function
+    // Date d1h = Date("12/20/2018");
+    // Date d2h = Date("12/25/2018");
 
-    cout << d1h.GetMonth();
-    cout << d2h.GetDay();
+    // cout << d1h.GetMonth();
+    // cout << d2h.GetDay();
 
-    vector<DailyStock> subVec = Search(d1h, d2h, dailyStocks);
+    // vector<DailyStock> subVec = Search(d1h, d2h, dailyStocks);
 
-    cout << endl;
-    cout << endl;
-    cout << endl;
+    // cout << endl;
+    // cout << endl;
+    // cout << endl;
 
-    cout << subVec.size();
+    // cout << subVec.size();
 
-    cout << endl;
-    cout << endl;
-    cout << endl;
+    // cout << endl;
+    // cout << endl;
+    // cout << endl;
 
-    //Outputing results of search 
-    for (int i = 0; i < subVec.size(); i++) {
-        cout << subVec[i].GetName() << "'s daily return's: " << subVec[i].GetDailyReturn() << "on: " << subVec[i].GetDate().GetMonth() << "/" << subVec[i].GetDate().GetDay() << "/" << subVec[i].GetDate().GetYear() << endl;
-    }
+    // //Outputing results of search 
+    // for (int i = 0; i < subVec.size(); i++) {
+    //     cout << subVec[i].GetName() << "'s daily return's: " << subVec[i].GetDailyReturn() << "on: " << subVec[i].GetDate().GetMonth() << "/" << subVec[i].GetDate().GetDay() << "/" << subVec[i].GetDate().GetYear() << endl;
+    // }
 
     cout << "\n-------- merge sort testing-----------\n" << endl;
 
-    // test case of 100 randomly picked stocks
-    // stocks arr to hold 100 random DailyStock objects
-    DailyStock* stocks[dailyStocks.size()];
-    cout << "Total daily stocks: " << dailyStocks.size() << endl;
+    vector<DailyStock> stocks;
+    //cout << "Total daily stocks: " << dailyStocks.size() << endl;
     for (int i = 0; i < dailyStocks.size(); i++) {
-        //cout << dailyStocks.at(i).GetName() << " " << dailyStocks.at(i).GetClose() << " " << dailyStocks.at(i).GetDailyReturn() << "%" << endl;
-        stocks[i] = &dailyStocks.at(i);
+        stocks.push_back(dailyStocks.at(i));
     }
     clock_t t;
     t = clock();
     mergeSort(stocks, 0, dailyStocks.size() - 1);
     t = clock() - t;
     cout << "MergeSort Time: " << ((float)t/CLOCKS_PER_SEC) << "s"<< endl;
+    //printStocksAll(stocks);
 
-    // for (int i = dailyStocks.size() - 1; i >= 0; i--) {
-    //     cout.precision(4);
-    //     cout << stocks[i]->GetName() << " " << stocks[i]->GetOpen() << " " << stocks[i]->GetClose() << " " << stocks[i]->GetDailyReturn() << "%" << endl;
-    //     //stocks[i] = &dailyStocks.at((rand() % 115000));
-
-    // }
 
     cout << "\n-------- quick sort testing-----------\n" << endl;
 
@@ -349,11 +349,8 @@ int main(){
     quickSort(temp, 0, temp.size() - 1);
     t = clock()-t;
     cout << "QuickSort time: " << ((float)t/CLOCKS_PER_SEC) << "s" << endl;
+    printStocksAll(temp);
 
-    // for (int i = temp.size() - 1; i >= 0; i--) {
-    //     cout.precision(4);
-    //     cout << temp[i].GetName() << " " << temp[i].GetOpen() << " " << temp[i].GetClose() << " " << temp[i].GetDailyReturn() << "%" << endl;
-    // }
 
     return 0;
 }
