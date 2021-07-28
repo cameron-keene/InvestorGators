@@ -349,7 +349,7 @@ int main(){
     quickSort(temp, 0, temp.size() - 1);
     t = clock()-t;
     cout << "QuickSort time: " << ((float)t/CLOCKS_PER_SEC) << "s" << endl;
-    printStocksAll(temp);
+    //printStocksAll(temp);
 
 
     return 0;
